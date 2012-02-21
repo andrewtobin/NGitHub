@@ -32,11 +32,26 @@ namespace NGitHub.Services {
 
         public GitHubRequestAsyncHandle GetRepositoriesAsync(string user,
                                                              int page,
+                                                             RepositoryTypes types,
                                                              Action<IEnumerable<Repository>> callback,
                                                              Action<GitHubException> onError) {
             Requires.ArgumentNotNull(user, "user");
 
-            var resource = string.Format("/users/{0}/repos", user);
+            string type = string.Empty;
+            switch (types)
+            {
+                case RepositoryTypes.All:
+                    type = "all";
+                    break;
+                case RepositoryTypes.Public:
+                    type = "public";
+                    break;
+                case RepositoryTypes.Member:
+                    type = "member";
+                    break;
+            }
+
+            var resource = string.Format("/users/{0}/repos?type={1}", user, type);
             return GetRepositoriesAsyncInternal(resource, page, callback, onError);
         }
 

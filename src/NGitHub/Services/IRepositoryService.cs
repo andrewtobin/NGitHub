@@ -12,6 +12,7 @@ namespace NGitHub.Services {
 
         GitHubRequestAsyncHandle GetRepositoriesAsync(string user,
                                                       int page,
+                                                      RepositoryTypes types,
                                                       Action<IEnumerable<Repository>> callback,
                                                       Action<GitHubException> onError);
 

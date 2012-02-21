@@ -116,4 +116,11 @@ namespace NGitHub.Models {
         [JsonProperty("size")]
         public int Size { get; set; }
     }
+
+    public enum RepositoryTypes
+    {
+        All,
+        Public,
+        Member
+    }
 }
