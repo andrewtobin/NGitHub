@@ -51,8 +51,8 @@ namespace NGitHub.Services {
                     break;
             }
 
-            var resource = string.Format("/users/{0}/repos?type={1}", user, type);
-            return GetRepositoriesAsyncInternal(resource, page, callback, onError);
+            var resource = string.Format("/users/{0}/repos", user);
+            return GetRepositoriesAsyncInternal(resource, page, type, callback, onError);
         }
 
         public GitHubRequestAsyncHandle GetWatchedRepositoriesAsync(string user,
@@ -62,7 +62,7 @@ namespace NGitHub.Services {
             Requires.ArgumentNotNull(user, "user");
 
             var resource = string.Format("/users/{0}/watched", user);
-            return GetRepositoriesAsyncInternal(resource, page, callback, onError);
+            return GetRepositoriesAsyncInternal(resource, page, "all", callback, onError);
         }
 
         public GitHubRequestAsyncHandle ForkAsync(string user,
@@ -90,7 +90,7 @@ namespace NGitHub.Services {
 
             var resource = string.Format("/repos/{0}/{1}/forks", user, repo);
             var request = new GitHubRequest(resource, API.v3, Method.GET);
-            return GetRepositoriesAsyncInternal(resource, page, callback, onError);
+            return GetRepositoriesAsyncInternal(resource, page, "all", callback, onError);
         }
 
         public GitHubRequestAsyncHandle WatchAsync(string user,
@@ -211,11 +211,13 @@ namespace NGitHub.Services {
         private GitHubRequestAsyncHandle GetRepositoriesAsyncInternal(
                                             string resource,
                                             int page,
+                                            string type,
                                             Action<IEnumerable<Repository>> callback,
                                             Action<GitHubException> onError) {
             var request = new GitHubRequest(resource,
                                             API.v3,
                                             Method.GET,
+                                            new Parameter("type", type),
                                             Parameter.Page(page));
             return _client.CallApiAsync<List<Repository>>(request,
                                                           r => callback(r.Data),
