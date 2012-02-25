@@ -19,7 +19,7 @@ namespace NGitHub.Services {
                                                          string title,
                                                          string body,
                                                          string assignee,
-                                                         int mileStone,
+                                                         int? mileStone,
                                                          string[] labels,
                                                          Action<Issue> callback,
                                                          Action<GitHubException> onError) {
