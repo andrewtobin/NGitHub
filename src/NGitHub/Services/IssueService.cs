@@ -19,7 +19,7 @@ namespace NGitHub.Services {
                                                          string title,
                                                          string body,
                                                          string assignee,
-                                                         string mileStone,
+                                                         int mileStone,
                                                          string[] labels,
                                                          Action<Issue> callback,
                                                          Action<GitHubException> onError) {
@@ -35,7 +35,7 @@ namespace NGitHub.Services {
                                                 title = title,
                                                 body = body,
                                                 assignee = assignee,
-                                                mileStone = mileStone,
+                                                milestone = mileStone,
                                                 labels = labels
                                             });
             return _client.CallApiAsync<Issue>(request,
