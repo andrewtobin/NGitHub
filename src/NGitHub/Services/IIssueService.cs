@@ -38,5 +38,15 @@ namespace NGitHub.Services {
                                                   int page,
                                                   Action<IEnumerable<Comment>> callback,
                                                   Action<GitHubException> onError);
+
+        GitHubRequestAsyncHandle GetLabelsAsync(string user,
+                                                string repo,
+                                                Action<IEnumerable<Label>> callback,
+                                                Action<GitHubException> onError);
+
+        GitHubRequestAsyncHandle GetMilestonesAsync(string user,
+                                                    string repo,
+                                                    Action<IEnumerable<Milestone>> callback,
+                                                    Action<GitHubException> onError);
     }
 }

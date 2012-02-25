@@ -124,5 +124,35 @@ namespace NGitHub.Services {
                                                        r => callback(r.Data),
                                                        onError);
         }
+
+        public GitHubRequestAsyncHandle GetLabelsAsync(string user,
+                                              string repo,
+                                              Action<IEnumerable<Label>> callback,
+                                              Action<GitHubException> onError)
+        {
+            Requires.ArgumentNotNull(user, "user");
+            Requires.ArgumentNotNull(repo, "repo");
+
+            var resource = string.Format("/repos/{0}/{1}/labels", user, repo);
+            var request = new GitHubRequest(resource, API.v3, Method.GET);
+            return _client.CallApiAsync<List<Label>>(request,
+                                               r => callback(r.Data),
+                                               onError);
+        }
+
+        public GitHubRequestAsyncHandle GetMilestonesAsync(string user,
+                                      string repo,
+                                      Action<IEnumerable<Milestone>> callback,
+                                      Action<GitHubException> onError)
+        {
+            Requires.ArgumentNotNull(user, "user");
+            Requires.ArgumentNotNull(repo, "repo");
+
+            var resource = string.Format("/repos/{0}/{1}/milestones", user, repo);
+            var request = new GitHubRequest(resource, API.v3, Method.GET);
+            return _client.CallApiAsync<List<Milestone>>(request,
+                                               r => callback(r.Data),
+                                               onError);
+        }
     }
 }
