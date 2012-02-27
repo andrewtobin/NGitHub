@@ -64,5 +64,10 @@ namespace NGitHub.Services {
                                                  int page,
                                                  Action<IEnumerable<Commit>> callback,
                                                  Action<GitHubException> onError);
+
+        GitHubRequestAsyncHandle GetRepositoryCollaboratorsAsync(string user,
+                                                                 string repo,
+                                                                 Action<IEnumerable<User>> callback,
+                                                                 Action<GitHubException> onError);
     }
 }

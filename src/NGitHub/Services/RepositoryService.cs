@@ -208,6 +208,21 @@ namespace NGitHub.Services {
                                                       onError);
         }
 
+        public GitHubRequestAsyncHandle GetRepositoryCollaboratorsAsync(string user,
+                                                   string repo,
+                                                   Action<IEnumerable<User>> callback,
+                                                   Action<GitHubException> onError)
+        {
+            Requires.ArgumentNotNull(user, "user");
+            Requires.ArgumentNotNull(repo, "repo");
+
+            var resource = string.Format("/repos/{0}/{1}/collaborators", user, repo);
+            var request = new GitHubRequest(resource, API.v3, Method.GET);
+            return _client.CallApiAsync<List<User>>(request,
+                                                    r => callback(r.Data),
+                                                    onError);
+        }
+
         private GitHubRequestAsyncHandle GetRepositoriesAsyncInternal(
                                             string resource,
                                             int page,
